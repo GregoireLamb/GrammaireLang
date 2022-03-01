@@ -21,7 +21,7 @@ bool E1::transition(Automate * automate,Symbole * s) {
             automate->decalage(s, new E5("Etat 5"));
             break;
         case FIN:
-            return false;
+            return true;
             break;
         default:
             this->error();

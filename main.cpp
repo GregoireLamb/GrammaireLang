@@ -4,18 +4,14 @@
 
 
 int main(void) {
-   string chaine("(5+3)*123");
+   string chaine;
+   
+   cin >> chaine ;
 
    Lexer l(chaine);
 
-   /*Symbole * s;
-   while(*(s=l.Consulter())!=FIN) {
-      s->Affiche();
-      cout<<endl;
-      l.Avancer();
-   }*/
-
-   Automate a(chaine);
+   Automate a(chaine);   
+   
    return 0;
 }
 

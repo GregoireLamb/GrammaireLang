@@ -10,7 +10,7 @@ class Automate;
 
 class Etat{
     public:
-        Etat(string name):name(name){cout<<name<<" : ";};
+        Etat(string name):name(name){ };
         virtual ~Etat(){};
         void print() const{cout<<name<<endl;};
         void error(){cout<<"Caractere inconnu"<<endl;};

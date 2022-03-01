@@ -16,20 +16,26 @@ void Automate::run(){
     Symbole *s;
     bool res=true;
     while(*(s=lexer->Consulter())!=FIN && res){
-        s->Affiche();
-        cout<<endl;
-        cout<<"listeEtat :"<< endl;
-        for(int i=0;i<listeEtats.size();i++){
-            listeEtats.at(i)->print();
-        }
-        cout<<endl;
+        // s->Affiche();
+        // cout<<endl;
+        // cout<<"listeEtat :"<< endl;
+        // for(int i=0;i<listeEtats.size();i++){
+        //     listeEtats.at(i)->print();
+        // }
+        // cout<<endl;
         res=listeEtats.back()->transition(this,s);
         lexer->Avancer();
     }
-    while(pileSymboles.size() > 0 && res){
+    while(pileSymboles.size() != 1 && res){
         res=listeEtats.back()->transition(this,s);
     }
-    cout<<"Fin "<< pileSymboles.back()->getValeur()<<endl;
+    if(res)
+    {
+        cout<<"Fin : val = "<< pileSymboles.back()->getValeur()<<endl;
+    }else{
+        cout<<"Fin : ERROR "<<endl;
+    }
+    
 }
 
 
@@ -43,25 +49,17 @@ void Automate::decalage(Symbole * s,Etat * etat){
 }
 
 void Automate::reduction(int n,Symbole * s){
-    //cout<<"n=" << n <<endl;
     vector<Symbole*> enlever;
-    // cout << "rEDUCTION symboles" <<endl;
-    // for(int i=0 ; i< pileSymboles.size() ; i++)
-    // {
-    //     pileSymboles.at(i)->Affiche();
-    //}
     for(int i=0;i<n;i++){
-        //cout << i<<endl;
-        //delete(listeEtats.back());
         listeEtats.pop_back();
         enlever.push_back(pileSymboles.back());
-        //pileSymboles.back()->Affiche();
         pileSymboles.pop_back();
     }
     reverse(enlever.begin(),enlever.end());
     int val = calcul(n,enlever); 
-    cout<<"resultat intermediaire : "<<val<<endl;
-    //pileSymboles.push_back(new Expr(val));
+    // cout<<"resultat intermediaire : "<<val<<" Symbol " ;
+    // s->Affiche();
+    // cout << endl;
     lexer->AddSymbole(s);
     listeEtats.back()->transition(this,new Expr(val));
 }
