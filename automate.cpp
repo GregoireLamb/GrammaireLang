@@ -3,6 +3,8 @@
 #include "E0.h"
 #include "etat.h"
 #include <iostream>
+#include <algorithm>
+
 using namespace std;
 
 Automate::Automate(string chaine) {
@@ -27,6 +29,7 @@ void Automate::run(){
     while(pileSymboles.size() > 0 && res){
         res=listeEtats.back()->transition(this,s);
     }
+    cout<<"Fin "<< pileSymboles.back()->getValeur()<<endl;
 }
 
 
@@ -35,7 +38,6 @@ void Automate::decalage(Symbole * s,Etat * etat){
     pileSymboles.push_back(s);
     if(s->isTerminal() == 1){
         lexer->Avancer();
-        cout << "----------------------" << endl;
     }
     
 }
@@ -56,6 +58,7 @@ void Automate::reduction(int n,Symbole * s){
         //pileSymboles.back()->Affiche();
         pileSymboles.pop_back();
     }
+    reverse(enlever.begin(),enlever.end());
     int val = calcul(n,enlever); 
     cout<<"resultat intermediaire : "<<val<<endl;
     //pileSymboles.push_back(new Expr(val));
